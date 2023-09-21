@@ -1,0 +1,40 @@
+<h1>広告学研究会</h1>
+<h3>Tweet詳細</h3>
+<div class="kouken">
+  <p><%= @kouken.tag %></p>
+  <p><%= @kouken.main %></p>
+  <p><%= @kouken.title%></p>
+  <p><%= @kouken.YouTube %></p>
+  <p><%= @kouken.image %></p>
+</div>
+
+<%= link_to "Tweet一覧に戻る", koukens_path %>
+<%= link_to "編集する", edit_kouken_path(@kouken.id) %>
+<iframe width="560" height="315" src="https://youtu.be/ZdjnKKfy8nw> <%= find_youtube_url(@kouken.youtube_url) %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+  <% @kouken.tags.each do |tag| %>
+    <span><%= tag.name %></span>
+<% end %>
+
+<p>
+  <strong>タイトル</strong>
+  <%= @kouken.title %>
+</p>
+
+<p>
+  <strong>時間</strong>
+  <%= @kouken.start_time.strftime("%Y-%m-%d %H:%M") %>
+</p>
+
+<%= link_to 'Edit', edit_kouken_path(@kouken) %> |
+<%= link_to 'Back', koukens_path %>
+
+<%= image_tag 'background.jpg' %>
+
+<div class="slider">
+        <div class="slider-inner">
+            <div class="slider-item"><img src="bbq.png"></div>
+            <div class="slider-item"><img src="hanabi.png"></div>
+        </div>
+    </div>

@@ -1,0 +1,56 @@
+
+<div class="blank">
+</div>
+
+<%= link_to "Introduction", kouken_syoukai_path %>
+
+
+<%= link_to "新規投稿へ", new_kouken_path %>
+<div class="koukens-container">
+  <% @koukens.each do |t| %>
+    <div class="kouken">
+    <%= image_tag t.image_url, size: "250x200" if t.image? %>
+      <%= t.tag %>
+      <%= t.main %>
+      <%= t.title%>
+      <%= t.YouTube %>
+      <%= t.image %>
+      <%= t.start_time.strftime("%Y-%m-%d %H:%M") %>
+      <%= t.created_at %>
+      <%= link_to "詳細へ", kouken_path(t.id) %>
+      <%= link_to "編集する", edit_kouken_path(t.id) %>
+      <%= button_to "削除する", kouken_path(t.id), method: :delete %>
+      
+    </div>
+  <% end %>
+  <% if user_signed_in? && current_user.admin == "社員" %>
+  <%= link_to "新規投稿へ", new_kouken_path %>
+<% else %>
+  <%= link_to "ログイン", koukens_path %>
+  <%= link_to "新規登録", new_user_registration_path %>
+<% end %>
+
+
+
+<%= form_tag({controller:"koukens",action:"index"}, method: :get) do %>
+    <% Tag.all.each do |t| %>
+        <li><%= check_box :tag_ids, t.name %><%= t.name %></li>
+    <% end %>
+    <%= submit_tag '検索' %>
+<% end %>
+
+<%= form_tag({controller:"koukens",action:"index"}, method: :get) do %>
+    <%= text_field_tag :tag %>
+    <%= submit_tag 'タグを追加' %>
+<% end %>
+
+<%= month_calendar events: @koukens do |date, koukens| %>
+    <%= date.day %>
+    <% koukens.each do |kouken| %>
+      <div>
+        <%= link_to kouken.title, kouken %>
+      </div>
+    <% end %>
+<% end %>
+
+
